@@ -1,0 +1,94 @@
+.maincontainer {
+    overflow: hidden;
+}
+
+
+.dashboard-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.twosidecontainer {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: auto;
+    overflow-x: scroll;
+
+    width: 70%;
+    height: 650px;
+    background-color: rgb(158, 161, 163);
+    /* Set a fixed height */
+}
+
+/* Product card styles */
+.product-card {
+    width: 300px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.product-details {
+    padding: 20px;
+}
+
+.productname {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.productdescription {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.productprice {
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.productbutton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Button styles */
+.productbutton button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease-in-out;
+    width: 100%;
+    margin-bottom: 10px;
+}
+

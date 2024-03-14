@@ -1,0 +1,30 @@
+.onesidecontainer {
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    width: 30%;
+
+}
+
+.side-canvas {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+.side-canvas a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .side-canvas a:hover {
+    text-decoration: underline;
+  }
+  
+  .side-canvas .btn {
+    width: 200px;
+    margin: auto;
+    padding: 10px;
+    margin-bottom: 10px;
+  }

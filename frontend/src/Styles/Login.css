@@ -1,0 +1,171 @@
+/* login.css */
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.maincontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+}
+
+.divisioncontainer {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  gap: 2rem;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  margin-top: 5rem;
+}
+
+.logincontainer {
+  margin: auto;
+  gap: 2rem;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 800px;
+  overflow: hidden;
+  padding: 5rem;
+  margin-top: 5rem;
+
+}
+
+
+.loginheading {
+  color: #1e1f1f;
+  font-size: 2em;
+}
+
+.logintitle {
+  text-align: center;
+  font-family: fantasy;
+}
+
+.formonesideinfo {
+  margin-top: 10vh;
+}
+
+.formoneside,
+.formsecondside {
+  padding: 2px;
+  text-align: center;
+}
+
+.formoneside h1 {
+  font-size: 3em;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+
+}
+
+.formoneside span {
+  color: #555;
+}
+
+/* Add these styles to your CSS file */
+
+.hirestyle {
+  font-size: 2.5em;
+  /* Adjust the font size as needed */
+  color: #000000;
+  /* Adjust the color as needed */
+  text-align: center;
+  /* Adjust the margin as needed */
+}
+
+.subbrandstyle {
+  margin-bottom: 0%;
+}
+
+.instyle {
+  color: #0cb9fd;
+  /* Adjust the color as needed */
+  font-weight: bold;
+}
+
+/* Optional: Add text shadow for a stylish effect */
+
+
+/* Optional: Hover effect */
+
+.loginform {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+}
+
+.emaillabel,
+.passwordlabel,
+.confirmpasswordlabel {
+  margin-top: 10px;
+  color: #333;
+}
+
+input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #0f0e0e;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.loginbutton {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+}
+
+.loginbutton:hover {
+  background-color: #45a049;
+}
+
+.bottomend {
+  position: fixed;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-decoration: none;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .divisioncontainer {
+    flex-direction: column;
+
+  }
+
+  .logincontainer {
+    width: 100%;
+  }
+}
+
+
+
+@media screen and (max-width: 480px) {
+
+  .formoneside,
+  .formsecondside {
+    padding: 1px;
+  }
+
+  .formoneside h1 {
+    font-size: 1.5em;
+  }
+}

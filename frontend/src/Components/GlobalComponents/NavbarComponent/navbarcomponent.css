@@ -1,0 +1,21 @@
+body {
+    margin: 0px;
+}
+
+.navhairstyle {
+    color: black;
+}
+
+
+.navinstyle {
+    color: #3498db;
+    font-weight: 700;
+}
+
+
+.dropdown-item,
+.dropdown-toggle{
+display: flex;
+align-items: center;
+gap: 2px;
+}

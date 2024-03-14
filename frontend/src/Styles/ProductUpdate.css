@@ -1,0 +1,62 @@
+.productupdatecontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.productupdatecontainer form {
+    width: 60%;
+    margin-bottom: 20px;
+}
+
+.productupdatecontainer .mb-3 {
+    margin-bottom: 20px;
+}
+
+.productupdatecontainer label {
+    font-weight: bold;
+}
+
+.productupdatecontainer .form-control {
+    width: 100%;
+}
+
+.productupdatecontainer .product-image {
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+.productupdatecontainer .croppedimagecontainer {
+    margin-top: 20px;
+}
+
+.productupdatecontainer .croppedimagecontainer img {
+    max-width: 200px;
+    margin-bottom: 10px;
+}
+
+.productupdatecontainer button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.productupdatecontainer button:hover {
+    background-color: #0056b3;
+}
+
+.productupdatecontainer button:focus {
+    outline: none;
+}
+
+.productupdatecontainer button:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+}
+
