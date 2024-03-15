@@ -99,14 +99,16 @@ const Products = () => {
         <div>
             <Navbar />
             <div className='search-container'>
-                <input
-                    type="text"
-                    id="input"
-                    placeholder="Search by Product name..."
-                    name="title"
-                    value={filterdata.title}
-                    onChange={handleFilterChange}
-                />
+                <div className="search-bar">
+                    <input
+                        type="text"
+                        id="input"
+                        placeholder="Search by Product name..."
+                        name="title"
+                        value={filterdata.title}
+                        onChange={handleFilterChange}
+                    />
+                </div>
                 <div className="searchfilterbutton">
                     <button className="btn btn-warning" onClick={handleSearchSubmit}>Filter</button>
                     <button className="btn btn-warning" onClick={handleSearchReset}>Reset</button>
