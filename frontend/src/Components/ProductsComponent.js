@@ -129,11 +129,11 @@ const Products = () => {
                                     <img className="product-image" src={product.image} alt={product.productName} />
                                 )}
 
-                                <div className="product-details">
+                           
                                     <h2 className='productname'>{product.productName}</h2>
                                     <p className='productdescription'>{product.productDescription}</p>
                                     <p className='productprice'>Price: ${product.price}</p>
-                                </div>
+                              
                                 <div className='productbutton'>
                                     <button type="button" className="btn btn-primary" onClick={() => handleNavigate(product)} >
                                         Update
