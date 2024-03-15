@@ -2,6 +2,20 @@
     overflow: hidden;
 }
 
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.searchfilterbutton {
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+
+}
 
 .products-container {
     width: 100%;
@@ -22,7 +36,7 @@
     gap: 10px;
     margin: auto;
     overflow-x: scroll;
- 
+
     width: 70%;
     height: 650px;
     background-color: rgb(158, 161, 163);

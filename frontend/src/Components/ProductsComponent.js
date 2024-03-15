@@ -9,9 +9,12 @@ import Footer from './GlobalComponents/FooterComponent/FooterComponent';
 const Products = () => {
     const navigate = useNavigate();
     const [productDetails, setProductDetails] = useState([]);
-
+    const [isLoading, setIsLoading] = useState(true)
+    const [searchedData, setSearchedData] = useState([])
     const [accountStatus, setAccountStatus] = useState(null);
-
+    const [filterdata, setFilterData] = useState({
+        title: "",
+    })
     const email = localStorage.getItem("userEmail")
 
     const fetchUserData = async () => {
@@ -56,6 +59,37 @@ const Products = () => {
         }
     };
 
+
+    const handleSearchSubmit = async () => {
+        const { title } = filterdata;
+
+        try {
+            const response = await axiosInstance.post("/api/search", {
+                title
+            });
+
+            if (response) {
+                setSearchedData(response.data.productData);
+            }
+        } catch (error) {
+            console.error("Error during search:", error);
+        }
+    };
+
+    const handleSearchReset = () => {
+        setFilterData({ title: "" });
+        setSearchedData([]); // Clear the searched data
+        setIsLoading(true); // Trigger loading state
+        fetchProductDetails(); // Fetch all products again
+    };
+
+    const handleFilterChange = (e) => {
+        setFilterData({
+            ...filterdata,
+            [e.target.name]: e.target.value,
+        });
+    };
+
     // Function to navigate to the update product page
     const handleNavigate = (product) => {
         navigate("/updateproduct", { state: { product } });
@@ -64,11 +98,26 @@ const Products = () => {
     return (
         <div>
             <Navbar />
+            <div className='search-container'>
+                <input
+                    type="text"
+                    id="input"
+                    placeholder="Search by Product name..."
+                    name="title"
+                    value={filterdata.title}
+                    onChange={handleFilterChange}
+                />
+                <div className="searchfilterbutton">
+                    <button className="btn btn-warning" onClick={handleSearchSubmit}>Filter</button>
+                    <button className="btn btn-warning" onClick={handleSearchReset}>Reset</button>
+
+                </div>
+            </div>
             <div className="products-container">
                 <Canvas />
                 <div className="twosidecontainer">
 
-                    {productDetails.map((product, index) => (
+                    {(searchedData.length > 0 ? searchedData : productDetails).map((product, index) => (
                         <div>
                             <div className="product-card" key={index}>
                                 {product.image.startsWith('/assets') ? (
@@ -122,7 +171,7 @@ const Products = () => {
             </div>
 
             {/* Delete Modal */}
-            <Footer/>
+            <Footer />
         </div>
     );
 };

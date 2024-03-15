@@ -4,6 +4,7 @@ const Sign = require("../controller/SignLoginController");
 const { fetchAndSaveProducts, getRequestCount, AdminUpdateProduct, MemberUpdateProduct, getReviewedProduct, AdminUpdateReviewProduct, deleteProduct } = require('../controller/ProductController');
 const { getUserTypeData, getUserStatusData, updateuserstatus } = require('../controller/UserController');
 const { refreshtoken } = require('../Auth/tokenrefresh');
+const { SearchFilter } = require('../controller/SearchController');
 
 //Auth
 router.post('/api/auth/login', Sign.loginUser);
@@ -38,6 +39,10 @@ router.get('/api/userdata', getUserStatusData)
 router.post('/api/updateuserstatus', updateuserstatus)
 
 //Token Refresh
-router.post('/api/refreshtoken',refreshtoken)
+router.post('/api/refreshtoken', refreshtoken)
+
+
+//Search
+router.post('/api/search', SearchFilter)
 
 module.exports = router;
