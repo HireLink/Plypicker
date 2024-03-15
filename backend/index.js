@@ -6,9 +6,23 @@ const app = express();
 const cors = require("cors")
 const bodyparser = require("body-parser")
 const connectDB = require("./Database/DB")
+require('dotenv').config(); // Load environment variables
 
 
-app.use(cors());
+// Use CORS middleware based on the environment
+if (process.env.NODE_ENV === 'production') {
+  // Use Vercel CORS configuration for production
+  app.use(cors({
+    origin: 'https://hirelink-official.vercel.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  }));
+} else {
+  // Use normal CORS for development
+  app.use(cors());
+}
+
+
 app.use(bodyparser.json({ limit: '10mb' }));
 app.use(bodyparser.urlencoded({ limit: '10mb', extended: true }));
 
