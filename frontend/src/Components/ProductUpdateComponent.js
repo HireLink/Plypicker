@@ -5,6 +5,7 @@ import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import Navbar from './GlobalComponents/NavbarComponent/navbarcomponent';
 import { useLocation } from 'react-router-dom';
+import Footer from './GlobalComponents/FooterComponent/FooterComponent';
 
 const ProductAdminUpdate = () => {
     const location = useLocation();
@@ -85,6 +86,7 @@ const ProductAdminUpdate = () => {
         <div>
             <Navbar />
             <div className='productupdatecontainer'>
+                <h1>Admin Update</h1>
                 <form>
                     <div className="mb-3">
                         {product.image.startsWith('/assets') ? (
@@ -112,7 +114,7 @@ const ProductAdminUpdate = () => {
                             type="file"
                             accept="image/*"
                             onChange={(e) => selectImage(e.target.files[0])}
-                            multiple
+                            
                         />
                         {src && (
                             <div>
@@ -142,7 +144,7 @@ const ProductAdminUpdate = () => {
                 {message && <p>{message}</p>}
             </div>
 
-
+            <Footer/>
 
         </div >
     );
@@ -157,7 +159,7 @@ const ProductTeamMemberUpdate = () => {
         productName: product.productName,
         productDescription: product.productDescription,
         price: product.price,
-        croppedImage: null
+        croppedImage: product.image
     });
     const email = localStorage.getItem("userEmail")
 
@@ -255,7 +257,7 @@ const ProductTeamMemberUpdate = () => {
                             type="file"
                             accept="image/*"
                             onChange={(e) => selectImage(e.target.files[0])}
-                            multiple
+                            
                         />
                         {src && (
                             <div>
@@ -285,7 +287,7 @@ const ProductTeamMemberUpdate = () => {
                 {message && <p>{message}</p>}
             </div>
 
-
+            <Footer/>
 
         </div >
     );

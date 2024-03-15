@@ -75,8 +75,8 @@ function Login() {
         <div className='divisioncontainer'>
           <div className='formoneside'>
             <div className='formonesideinfo'>
-              <h1 className='hirestyle'>Hire<p className='instyle'>Link</p></h1>
-              <p>Welcome aboard to Hire and Connect People</p>
+              <h1 className='hirestyle'>Ply<p className='instyle'>Picker</p></h1>
+              <p>Welcome aboard to Update and Connect People</p>
               <p>{message}</p>
             </div>
           </div>

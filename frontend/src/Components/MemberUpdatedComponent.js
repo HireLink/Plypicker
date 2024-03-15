@@ -6,16 +6,22 @@ import { useNavigate } from 'react-router-dom';
 import '../Styles/ReviewProduct.css'
 import Footer from './GlobalComponents/FooterComponent/FooterComponent';
 
-const ReviewProduct = () => {
+const MemberReviewProduct = () => {
     const [reviewedProducts, setReviewedProducts] = useState([]);
     const [activeButton, setActiveButton] = useState("Pending");
     const handleButtonClick = (button) => {
         setActiveButton(button);
     };
+    const email = localStorage.getItem("userEmail")
     const navigate = useNavigate()
+    
     const fetchReviewedProduct = async () => {
         try {
-            const response = await axiosInstance.get('/api/reviewedproduct');
+            const response = await axiosInstance.get('/api/reviewedproduct', {
+                params:{
+                    email
+                }
+            });
             setReviewedProducts(response.data.MemberReviewedProducts);
         } catch (error) {
             console.error('Error fetching reviewed products:', error);
@@ -76,11 +82,9 @@ const ReviewProduct = () => {
                                             <p className='reviewproductprice'>Price: ${product.product[0].price}</p>
                                         </div>
                                         <div className='reviewproductbutton'>
-                                            {product.status === "Pending" ?
-                                                <button type="button" className="btn btn-primary" onClick={() => handleNavigate(product)} >
-                                                    Review Changes
-                                                </button>
-                                                : null}
+                                            <button type="button" className="btn btn-primary" onClick={() => handleNavigate(product)} >
+                                                Review Changes
+                                            </button>
                                         </div>
                                     </div>
                                 ))}
@@ -99,4 +103,4 @@ const ReviewProduct = () => {
     );
 };
 
-export default ReviewProduct;
+export default MemberReviewProduct;

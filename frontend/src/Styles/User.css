@@ -1,0 +1,38 @@
+/* Add this CSS to your stylesheet */
+.user-card {
+    margin-bottom: 20px;
+    height: 650px;
+    overflow-y: scroll;
+  }
+  
+  .user-details-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
+  
+  .user-details-table th,
+  .user-details-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .user-details-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .user-details-table tbody tr {
+    background-color: #ffffff;
+  }
+  
+  .user-details-table tbody tr:hover {
+    background-color: #ddd;
+  }
+  
+  .usermail,
+  .useraccounttype,
+  .useraccountstatus {
+    margin: 0;
+  }
+  

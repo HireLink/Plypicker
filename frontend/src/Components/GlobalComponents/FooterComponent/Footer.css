@@ -1,0 +1,21 @@
+  .designddeveloped {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    background-color: #f0f0f0; /* Set a background color if needed */
+    padding: 12px; /* Adjust padding as needed */
+  }
+  
+  .designddeveloped p {
+    margin: 0; /* Remove default margin */
+  }
+  
+  .designddeveloped a {
+    text-decoration: none;
+    color: red;
+    font-weight: bold;
+    margin-left: 5px; /* Add spacing between text and the link */
+  }
+  

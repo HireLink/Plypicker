@@ -3,10 +3,11 @@
 }
 
 
-.dashboard-container {
+.products-container {
     width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    gap: 10px;
+    padding: 16px;
     display: flex;
     justify-content: space-between;
 }
@@ -21,7 +22,7 @@
     gap: 10px;
     margin: auto;
     overflow-x: scroll;
-
+ 
     width: 70%;
     height: 650px;
     background-color: rgb(158, 161, 163);
@@ -92,3 +93,72 @@
     margin-bottom: 10px;
 }
 
+
+
+/* Dashboard.css */
+.dashboard-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dashboardtwosidecontainer {
+    padding: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: auto;
+    width: 70%;
+    height: 650px;
+    background-color: rgb(158, 161, 163);
+    /* Set a fixed height */
+}
+
+.reqeustcount {
+    gap: 10px;
+    width: 100%;
+    margin: auto;
+    justify-content: space-between;
+}
+
+
+.box-info {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.box-info li {
+    flex: 1;
+    margin: 0 10px;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.box-info li:hover {
+    background-color: #ddd;
+}
+
+.box-info li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.box-info li i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.box-info li h3 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.box-info li p {
+    margin: 5px 0;
+}

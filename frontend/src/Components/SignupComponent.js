@@ -90,8 +90,8 @@ function Signup() {
         <div className='divisioncontainer'>
           <div className='formoneside'>
             <div className='formonesideinfo'>
-              <h1 className='hirestyle'>Hire<p className='instyle'>Link</p></h1>
-              <p className='subbrandstyle'>Welcome aboard to Hire and Connect People</p>
+              <h1 className='hirestyle'>Ply<p className='instyle'>Picker</p></h1>
+              <p className='subbrandstyle'>Welcome aboard to Update and Connect People</p>
               {checktrue && (
                 isValid ? (
                   <div style={{ color: 'green' }}>Password is strong!</div>

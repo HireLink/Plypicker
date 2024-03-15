@@ -36,6 +36,10 @@ const loginUser = async (req, res) => {
 
         const user = await User.findOne({ email });
 
+        if (user.accountstatus === "Blocked") {
+            return res.status(400).json({ message: 'Account is Blocked! Contact Admin for further' });
+        }
+
         if (user) {
 
             const isPasswordMatch = await bcrypt.compare(password, user.password);

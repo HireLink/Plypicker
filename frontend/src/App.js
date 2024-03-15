@@ -9,6 +9,9 @@ import ProductUpdate from "./Components/ProductUpdateComponent";
 import Products from "./Components/ProductsComponent";
 import Dashboard from "./Components/DashboardComponent";
 import ReviewProduct from "./Components/ReviewedComponent";
+import ReviewAdminUpdate from "./Components/ReviewedUpdateComponent";
+import User from "./Components/UserComponent";
+import MemberReviewProduct from "./Components/MemberUpdatedComponent";
 
 const PrivateRoute = ({ element, ...rest }) => {
   return isAuthenticated() ? (
@@ -61,6 +64,21 @@ const App = () => {
         <Route
           path="/reviewproduct"
           element={<PrivateRoute element={< ReviewProduct />} />}
+        />
+
+        <Route
+          path="/reviewupdateproduct"
+          element={<PrivateRoute element={< ReviewAdminUpdate />} />}
+        />
+
+        <Route
+          path="/userstatus"
+          element={<PrivateRoute element={< User />} />}
+        />
+
+        <Route
+          path="/memberupdatedproduct"
+          element={<PrivateRoute element={< MemberReviewProduct />} />}
         />
 
       </Routes>

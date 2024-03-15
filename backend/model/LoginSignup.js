@@ -19,6 +19,7 @@ const productSchema = new mongoose.Schema({
 const reviewProductUpdate = new mongoose.Schema({
     status: { type: String, default: "Pending" },
     productid: { type: mongoose.Types.ObjectId, ref: 'Product' },
+    userid: { type: mongoose.Types.ObjectId, ref: 'User' },
     product: [productSchema],
     image: String,
     useraccounttype: { type: String }
