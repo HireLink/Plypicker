@@ -9,7 +9,7 @@ const Footer = () => {
         <div>
             <div className="designddeveloped" >
                 <p style={{ margin: 0 }}>© All Rights Reserved | Designed And Developed By</p>
-                <Link to='https://www.thecapitalhub.in/'>CapitalHub</Link>
+                <Link to='https://www.thecapitalhub.in/'>PlyPicker</Link>
             </div>
 
         </div>
