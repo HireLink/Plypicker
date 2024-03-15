@@ -1,4 +1,4 @@
-const { User } = require("../model/LoginSignup")
+const { User } = require("../model/Modal")
 
 const getUserTypeData = async (req, res) => {
     try {

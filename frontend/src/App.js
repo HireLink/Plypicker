@@ -31,7 +31,6 @@ const PrivateLoginRoute = ({ element, ...rest }) => {
 
 
 const App = () => {
-
   if (isMaintenanceMode()) {
     return <MaintenancePage />;
   }

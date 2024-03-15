@@ -4,7 +4,7 @@ const path = require('path');
 const { promisify } = require('util');
 const { v4: uuidv4 } = require('uuid');
 const writeFileAsync = promisify(fs.writeFile);
-const { Product, User, ReviewProduct } = require('../model/LoginSignup'); // Import the Product model
+const { Product, User, ReviewProduct } = require('../model/Modal'); // Import the Product model
 
 const fetchAndSaveProducts = async (req, res) => {
     try {
