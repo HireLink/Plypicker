@@ -68,7 +68,7 @@ const ReviewAdminUpdate = () => {
 
     const handleSubmit = async (statusofapproval) => {
         try {
-            
+
             setMessage("Submitting")
             console.log(productData);
 
@@ -120,15 +120,15 @@ const ReviewAdminUpdate = () => {
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="productName" className="form-label">Product Name</label>
-                                <input type="text" className="form-control" id="productName" value={originalProduct.productName} onChange={(e) => setProductData({ ...productData, productName: e.target.value })} />
+                                <input type="text" className="form-control" id="productName" value={originalProduct.productName} onChange={(e) => setProductData({ ...productData, productName: e.target.value })} disabled />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="productDescription" className="form-label">Product Description</label>
-                                <textarea className="form-control" id="productDescription" rows="3" value={originalProduct.productDescription} onChange={(e) => setProductData({ ...productData, productDescription: e.target.value })}></textarea>
+                                <textarea className="form-control" id="productDescription" rows="3" value={originalProduct.productDescription} onChange={(e) => setProductData({ ...productData, productDescription: e.target.value })} disabled></textarea>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="productPrice" className="form-label">Product Price</label>
-                                <input type="number" className="form-control" id="productPrice" value={originalProduct.price} onChange={(e) => setProductData({ ...productData, price: e.target.value })} />
+                                <input type="number" className="form-control" id="productPrice" value={originalProduct.price} onChange={(e) => setProductData({ ...productData, price: e.target.value })} disabled />
                             </div>
 
                         </form>
@@ -149,15 +149,15 @@ const ReviewAdminUpdate = () => {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="productName" className="form-label">Product Name</label>
-                            <input type="text" className="form-control" id="productName" value={product.product[0].productName} onChange={(e) => setProductData({ ...productData, productName: e.target.value })} />
+                            <input type="text" className="form-control" id="productName" value={product.product[0].productName} onChange={(e) => setProductData({ ...productData, productName: e.target.value })} disabled />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="productDescription" className="form-label">Product Description</label>
-                            <textarea className="form-control" id="productDescription" rows="3" value={product.product[0].productDescription} onChange={(e) => setProductData({ ...productData, productDescription: e.target.value })}></textarea>
+                            <textarea className="form-control" id="productDescription" rows="3" value={product.product[0].productDescription} onChange={(e) => setProductData({ ...productData, productDescription: e.target.value })} disabled></textarea>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="productPrice" className="form-label">Product Price</label>
-                            <input type="number" className="form-control" id="productPrice" value={product.product[0].price} onChange={(e) => setProductData({ ...productData, price: e.target.value })} />
+                            <input type="number" className="form-control" id="productPrice" value={product.product[0].price} onChange={(e) => setProductData({ ...productData, price: e.target.value })} disabled />
                         </div>
 
                     </form>
@@ -165,9 +165,10 @@ const ReviewAdminUpdate = () => {
                         <div className='reviewupdatestatusbutton'>
                             <button type='button' className='btn btn-primary' onClick={() => handleSubmit(isApproved)}>Approve</button>
                             <button type='button' className='btn btn-danger' onClick={() => handleSubmit(isRejected)}>Reject</button>
+                            {message && <p>{message}</p>}
                         </div>
                         : null}
-                    {message && <p>{message}</p>}
+
                 </div>
 
 

@@ -78,6 +78,11 @@
 
 }
 
+.reviewupdatestatusbutton{
+    gap:10px;
+    display: flex;
+}
+
 .reviewupdatetwocontainer {
     width: 50%;
     background-color: #ddd;
