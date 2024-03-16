@@ -70,8 +70,7 @@ const ReviewAdminUpdate = () => {
         try {
 
             setMessage("Submitting")
-            console.log(productData);
-
+       
             // Include the update status in the productData object
             const updatedProductData = { ...productData, statusofapproval };
 
@@ -82,9 +81,9 @@ const ReviewAdminUpdate = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-
+            console.log("response", response);
             if (response) {
-                setMessage("Success")
+             
                 setMessage(response.data.message);
                 fetchProductDetails()
             }
