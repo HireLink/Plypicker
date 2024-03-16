@@ -32,7 +32,7 @@ const deleteProduct = async (req, res) => {
     try {
         // Find the product by ID and delete it
         await Product.findByIdAndDelete(id);
-        
+
         res.status(200).json({ message: 'Product deleted successfully' });
     } catch (error) {
         console.error('Error deleting product:', error);
@@ -100,9 +100,10 @@ const AdminUpdateReviewProduct = async (req, res) => {
 
 
 const AdminUpdateProduct = async (req, res) => {
-    const productData = req.body;
-    const { productId, productName, price, croppedImage, productDescription } = productData.productData;
-
+    const { productData } = req.body;
+    const { productId, productName, price, croppedImage, productDescription } = req.body.productData;
+    console.log(req.body.productData);
+    console.log(croppedImage);
     try {
         if (productData) {
             const product = await Product.findById(productId);
@@ -116,6 +117,7 @@ const AdminUpdateProduct = async (req, res) => {
             product.productDescription = productDescription;
             product.price = price;
 
+            await product.save();
             // If a cropped image is provided, save it to the filesystem
             if (croppedImage && croppedImage.startsWith('data:image/jpeg;base64,')) {
                 // Remove the data URL prefix to get the base64 data
@@ -123,6 +125,14 @@ const AdminUpdateProduct = async (req, res) => {
                 const imagePath = path.join(__dirname, '../views/assets', `${productId}.jpg`);
 
                 // Write the image data to the filesystem
+                fs.writeFileSync(imagePath, base64Data, 'base64');
+
+                // Update the product's image path in the database
+                product.image = `/assets/${productId}.jpg`;
+            } else if (croppedImage) {
+                const base64Data = croppedImage
+                const imagePath = path.join(__dirname, '../views/assets', `${productId}.jpg`);
+
                 fs.writeFileSync(imagePath, base64Data, 'base64');
 
                 // Update the product's image path in the database
@@ -146,7 +156,8 @@ const MemberUpdateProduct = async (req, res) => {
         const { productName, productDescription, price, croppedImage } = req.body.productData;
         const { email } = req.body;
         const productId = req.body.productData.productId;
-
+        console.log(req.body.productData);
+        console.log(croppedImage);
         const userExist = await User.findOne({ email: email });
 
         const review = new ReviewProduct({
@@ -163,6 +174,10 @@ const MemberUpdateProduct = async (req, res) => {
 
         await review.save();
 
+        const isBase64 = (str) => {
+            // Check if the string starts with the base64 prefix
+            return str.startsWith('data:image') && str.includes(';base64,');
+        };
 
         if (croppedImage && croppedImage.startsWith('data:image/jpeg;base64,')) {
             // Generate a unique product ID
@@ -175,9 +190,21 @@ const MemberUpdateProduct = async (req, res) => {
 
             // Save the image path in the review document
             review.image = `/assets/${randomProductId}.jpg`;
+        } else if (isBase64(croppedImage)) {
+            // If croppedImage is in base64 format, perform the necessary actions
+            const randomProductId = uuidv4();
+            const imagePath = path.join(__dirname, '../views/assets', `${randomProductId}.jpg`);
+        
+            // Decode base64 and write to file
+            await writeFileAsync(imagePath, base64Data, 'base64');
+        
+            // Save the image path in the review document
+            review.image = `/assets/${randomProductId}.jpg`;
         } else {
-            review.image = croppedImage
+            // If croppedImage is not in base64 format, assume it's already an image path
+            review.image = croppedImage;
         }
+        
 
         // Save the review to the database
         await review.save();

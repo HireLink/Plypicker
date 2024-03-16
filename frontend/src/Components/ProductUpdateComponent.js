@@ -16,7 +16,8 @@ const ProductAdminUpdate = () => {
         productName: product.productName,
         productDescription: product.productDescription,
         price: product.price,
-        croppedImage: null
+        croppedImage: null,
+        cropped: false, // Flag to track if the image has been cropped
     });
 
 
@@ -57,15 +58,35 @@ const ProductAdminUpdate = () => {
         // Converting to base64
         const base64Image = canvas.toDataURL('image/jpeg');
         setOutput(base64Image);
-        setProductData({ ...productData, croppedImage: base64Image })
+
+        setProductData({ ...productData, croppedImage: base64Image, cropped: true })
     };
 
+    const convertImageToBase64 = async (file) => {
+        if (!file) {
+            return null; // Return null if no file is selected
+        }
 
-    const handleSubmit = async () => {
+        if (!(file instanceof Blob)) {
+            throw new Error("Invalid file type");
+        }
+
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                resolve(reader.result.split(',')[1]); // Extract base64 data from the result
+            };
+            reader.onerror = (error) => reject(error);
+            reader.readAsDataURL(file); // Read the file as a data URL
+        });
+    };
+
+    const handleUpdateSubmit = async () => {
         try {
-            console.log(productData);
+            const imageData = productData.cropped ? productData.croppedImage : await convertImageToBase64(productData.croppedImage);
+
             const response = await axiosInstance.post('/updateproduct', {
-                productData,
+                productData: { ...productData, croppedImage: imageData },
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -113,8 +134,10 @@ const ProductAdminUpdate = () => {
                         <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => selectImage(e.target.files[0])}
-                            
+                            onChange={(e) => {
+                                selectImage(e.target.files[0]);
+                                setProductData({ ...productData, croppedImage: e.target.files[0], cropped: false });
+                            }}
                         />
                         {src && (
                             <div>
@@ -140,11 +163,11 @@ const ProductAdminUpdate = () => {
 
                     )}
                 </div>
-                <button type='button' className='btn btn-primary' onClick={handleSubmit}>Submit</button>
+                <button type='button' className='btn btn-primary' onClick={handleUpdateSubmit}>Submit</button>
                 {message && <p>{message}</p>}
             </div>
 
-            <Footer/>
+            <Footer />
 
         </div >
     );
@@ -159,7 +182,8 @@ const ProductTeamMemberUpdate = () => {
         productName: product.productName,
         productDescription: product.productDescription,
         price: product.price,
-        croppedImage: product.image
+        croppedImage: product.image,
+        cropped: false,
     });
     const email = localStorage.getItem("userEmail")
 
@@ -200,14 +224,43 @@ const ProductTeamMemberUpdate = () => {
         // Converting to base64
         const base64Image = canvas.toDataURL('image/jpeg');
         setOutput(base64Image);
-        setProductData({ ...productData, croppedImage: base64Image })
+        setProductData({ ...productData, croppedImage: base64Image, cropped: true })
     };
 
-    const handleSubmit = async () => {
+    const convertImageToBase64 = async (file) => {
+        if (!file) {
+            return null; // Return null if no file is selected
+        }
+    
+        if (!(file instanceof Blob)) {
+            return null;
+        }
+    
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                // Prepend the base64 data with the appropriate data URL prefix
+                const base64Data = reader.result.split(',')[1];
+                const dataURL = `data:image/jpeg;base64,${base64Data}`;
+                resolve(dataURL);
+            };
+            reader.onerror = (error) => reject(error);
+            reader.readAsDataURL(file); // Read the file as a data URL
+        });
+    };
+    
+    
+
+    const handleMemberUpdateSubmit = async () => {
         try {
+            let imageData = productData.cropped ? productData.croppedImage : await convertImageToBase64(productData.croppedImage);
+            if (!imageData) {
+                imageData = product.image;
+            }
             console.log(productData);
+            console.log(imageData);
             const response = await axiosInstance.post('/memberupdateproduct', {
-                productData,
+                productData: { ...productData, croppedImage: imageData },
                 email,
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -215,7 +268,7 @@ const ProductTeamMemberUpdate = () => {
             });
 
             if (response) {
-                setMessage("Updated Successfully")
+                setMessage("Updated Successfully");
             }
 
             // Here, you can submit the updated product data, including the cropped image, to your backend
@@ -224,6 +277,7 @@ const ProductTeamMemberUpdate = () => {
             console.error('Error updating product:', error);
         }
     };
+
 
     return (
         <div>
@@ -256,8 +310,10 @@ const ProductTeamMemberUpdate = () => {
                         <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => selectImage(e.target.files[0])}
-                            
+                            onChange={(e) => {
+                                selectImage(e.target.files[0]);
+                                setProductData({ ...productData, croppedImage: e.target.files[0], cropped: false });
+                            }}
                         />
                         {src && (
                             <div>
@@ -283,11 +339,11 @@ const ProductTeamMemberUpdate = () => {
 
                     )}
                 </div>
-                <button type='button' className='btn btn-primary' onClick={handleSubmit}>Submit</button>
+                <button type='button' className='btn btn-primary' onClick={handleMemberUpdateSubmit}>Submit</button>
                 {message && <p>{message}</p>}
             </div>
 
-            <Footer/>
+            <Footer />
 
         </div >
     );
