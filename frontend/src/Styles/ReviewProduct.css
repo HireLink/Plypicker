@@ -10,6 +10,7 @@
 
 .reviewproduct-card img {
     width: 35%;
+    object-fit: cover;
     border-radius: 10px 0 0 10px;
 }
 
