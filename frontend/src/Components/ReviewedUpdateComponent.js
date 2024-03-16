@@ -68,6 +68,8 @@ const ReviewAdminUpdate = () => {
 
     const handleSubmit = async (statusofapproval) => {
         try {
+            
+            setMessage("Submitting")
             console.log(productData);
 
             // Include the update status in the productData object
