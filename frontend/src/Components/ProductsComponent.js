@@ -11,6 +11,7 @@ const Products = () => {
     const [productDetails, setProductDetails] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
     const [searchedData, setSearchedData] = useState([])
+    const [deleteid, setdeleteid] = useState(null)
     const [accountStatus, setAccountStatus] = useState(null);
     const [filterdata, setFilterData] = useState({
         title: "",
@@ -49,17 +50,20 @@ const Products = () => {
     }, []);
 
     // Function to handle product deletion
-    const handleDelete = async (productid) => {
+    const handleDelete = async () => {
+        console.log(deleteid);
         try {
             await axiosInstance.delete('/deleteproduct', {
                 params: {
-                    productid
+                    productid:deleteid
                 }
             });
             fetchProductDetails()
         } catch (error) {
             console.error('Error deleting product:', error);
         }
+
+
     };
 
 
@@ -142,7 +146,7 @@ const Products = () => {
                                         Update
                                     </button>
                                     {accountStatus === "Admin" ?
-                                        <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                        <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onClick={() => setdeleteid(product._id)}>
                                             Delete
                                         </button>
                                         : null}
@@ -161,7 +165,7 @@ const Products = () => {
                                         </div>
                                         <div className="modal-footer">
                                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={() => handleDelete(product._id)}>Delete</button>
+                                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDelete}>Delete</button>
 
                                         </div>
                                     </div>
