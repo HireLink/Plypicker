@@ -2,7 +2,7 @@
 
 // auth.js
 
-const setisMaintenanceMode = true;
+const setisMaintenanceMode = false;
 
 
 export const isAuthenticated = () => {
