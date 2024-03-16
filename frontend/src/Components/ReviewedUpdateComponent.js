@@ -82,6 +82,7 @@ const ReviewAdminUpdate = () => {
             });
 
             if (response) {
+                setMessage("Success")
                 setMessage(response.data.message);
                 fetchProductDetails()
             }
@@ -169,7 +170,7 @@ const ReviewAdminUpdate = () => {
 
 
             </div>
-            <Footer/>
+            <Footer />
         </div >
     );
 };

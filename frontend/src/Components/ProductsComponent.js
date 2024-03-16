@@ -49,11 +49,14 @@ const Products = () => {
     }, []);
 
     // Function to handle product deletion
-    const handleDelete = async (product) => {
+    const handleDelete = async (productid) => {
         try {
-            await axiosInstance.delete(`/products/${product.id}`);
-            // Fetch updated product details again after successful delete
-            fetchProductDetails();
+            await axiosInstance.delete('/deleteproduct', {
+                params: {
+                    productid
+                }
+            });
+            fetchProductDetails()
         } catch (error) {
             console.error('Error deleting product:', error);
         }
@@ -129,11 +132,11 @@ const Products = () => {
                                     <img className="product-image" src={product.image} alt={product.productName} />
                                 )}
 
-                           
-                                    <h2 className='productname'>{product.productName}</h2>
-                                    <p className='productdescription'>{product.productDescription}</p>
-                                    <p className='productprice'>Price: ${product.price}</p>
-                              
+
+                                <h2 className='productname'>{product.productName}</h2>
+                                <p className='productdescription'>{product.productDescription}</p>
+                                <p className='productprice'>Price: ${product.price}</p>
+
                                 <div className='productbutton'>
                                     <button type="button" className="btn btn-primary" onClick={() => handleNavigate(product)} >
                                         Update
@@ -158,7 +161,8 @@ const Products = () => {
                                         </div>
                                         <div className="modal-footer">
                                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" className="btn btn-danger" onClick={handleDelete} >Delete</button>
+                                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={() => handleDelete(product._id)}>Delete</button>
+
                                         </div>
                                     </div>
                                 </div>

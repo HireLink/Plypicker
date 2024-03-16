@@ -103,6 +103,14 @@ const ProductAdminUpdate = () => {
         }
     };
 
+    useEffect((req, res) => {
+        if (message) {
+          setTimeout(() => {
+            setMessage(null)
+          }, 3000);
+        }
+      })
+
     return (
         <div>
             <Navbar />
@@ -278,6 +286,13 @@ const ProductTeamMemberUpdate = () => {
         }
     };
 
+    useEffect((req, res) => {
+        if (message) {
+          setTimeout(() => {
+            setMessage(null)
+          }, 3000);
+        }
+      })
 
     return (
         <div>
