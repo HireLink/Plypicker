@@ -6,11 +6,12 @@ import 'react-image-crop/dist/ReactCrop.css';
 import Navbar from './GlobalComponents/NavbarComponent/navbarcomponent';
 import { useLocation } from 'react-router-dom';
 import Footer from './GlobalComponents/FooterComponent/FooterComponent';
+import axios from 'axios';
 
 const ProductAdminUpdate = () => {
     const location = useLocation();
     const { product } = location.state || null;
-    const [message, setMessage] = useState("")
+    const [message, setMessage] = useState("");
     const [productData, setProductData] = useState({
         productId: product._id,
         productName: product.productName,
@@ -19,6 +20,13 @@ const ProductAdminUpdate = () => {
         croppedImage: null,
         cropped: false, // Flag to track if the image has been cropped
     });
+
+    const [Image, setproductImage] = useState(null)
+
+    const handleFileChange = (e) => {
+        const selectedFiles = e.target.files;
+        setproductImage(...selectedFiles);
+    };
 
 
     const [src, setSrc] = useState(null);
@@ -55,61 +63,64 @@ const ProductAdminUpdate = () => {
             crop.height * scaleY,
         );
 
-        // Converting to base64
-        const base64Image = canvas.toDataURL('image/jpeg');
-        setOutput(base64Image);
+        // Convert canvas data to a Blob
+        canvas.toBlob((blob) => {
+            console.log(blob); // Log the blob data to verify
 
-        setProductData({ ...productData, croppedImage: base64Image, cropped: true })
+            // Create a File object from the Blob
+            const croppedImageFile = new File([blob], 'cropped_image.jpg', { type: 'image/jpeg' });
+            console.log(croppedImageFile); // Log the cropped image file
+
+            // Display the cropped image
+            setOutput(URL.createObjectURL(blob));
+
+            // Set the cropped image file in the state
+
+            setproductImage(croppedImageFile)
+            setProductData({
+                ...productData,
+                cropped: true
+            });
+
+        }, 'image/jpeg');
     };
 
-    const convertImageToBase64 = async (file) => {
-        if (!file) {
-            return null; // Return null if no file is selected
-        }
 
-        if (!(file instanceof Blob)) {
-            throw new Error("Invalid file type");
-        }
+    const handleUpdateSubmit = async (event) => {
+        event.preventDefault()
+        setMessage("Submitting")
+        const formData = new FormData();
+        formData.append('productId', productData.productId);
+        formData.append('productName', productData.productName);
+        formData.append('productDescription', productData.productDescription);
+        formData.append('price', productData.price);
+        formData.append('file', Image);
 
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                resolve(reader.result.split(',')[1]); // Extract base64 data from the result
-            };
-            reader.onerror = (error) => reject(error);
-            reader.readAsDataURL(file); // Read the file as a data URL
-        });
-    };
-
-    const handleUpdateSubmit = async () => {
         try {
-            const imageData = productData.cropped ? productData.croppedImage : await convertImageToBase64(productData.croppedImage);
-
-            const response = await axiosInstance.post('/updateproduct', {
-                productData: { ...productData, croppedImage: imageData },
+            const response = await axios.post('http://localhost:5000/updateproduct', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
 
-            if (response) {
-                setMessage("Updated Successfully")
-            }
 
-            // Here, you can submit the updated product data, including the cropped image, to your backend
-            console.log('Submitting product data:');
+            if (response) {
+                setMessage("Updated Successfully");
+            }
         } catch (error) {
+            setMessage("Error");
             console.error('Error updating product:', error);
         }
     };
 
-    useEffect((req, res) => {
-        if (message) {
-          setTimeout(() => {
-            setMessage(null)
-          }, 3000);
+
+    useEffect(() => {
+        if (message === "Updated Successfully") {
+            setTimeout(() => {
+                setMessage(null)
+            }, 3000);
         }
-      })
+    }, [message]);
 
     return (
         <div>
@@ -118,12 +129,7 @@ const ProductAdminUpdate = () => {
                 <h1>Admin Update</h1>
                 <form>
                     <div className="mb-3">
-                        {product.image.startsWith('/assets') ? (
-                            <img className="product-image" src={`${process.env.REACT_APP_BACKEND_URL}${product.image}`} alt={product.productName} />
-
-                        ) : (
-                            <img className="product-image" src={product.image} alt={product.productName} />
-                        )}
+                        <img className="product-image" src={product.image} alt={product.productName} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="productName" className="form-label">Product Name</label>
@@ -142,7 +148,9 @@ const ProductAdminUpdate = () => {
                         <input
                             type="file"
                             accept="image/*"
+
                             onChange={(e) => {
+                                handleFileChange(e)
                                 selectImage(e.target.files[0]);
                                 setProductData({ ...productData, croppedImage: e.target.files[0], cropped: false });
                             }}
@@ -166,9 +174,7 @@ const ProductAdminUpdate = () => {
                         <div>
                             <h3>Cropped Image:</h3>
                             <img src={output} alt="Cropped" />
-
                         </div>
-
                     )}
                 </div>
                 <button type='button' className='btn btn-primary' onClick={handleUpdateSubmit}>Submit</button>
@@ -176,15 +182,16 @@ const ProductAdminUpdate = () => {
             </div>
 
             <Footer />
-
-        </div >
+        </div>
     );
 };
+
 
 const ProductTeamMemberUpdate = () => {
     const location = useLocation();
     const { product } = location.state || null;
     const [message, setMessage] = useState("")
+
     const [productData, setProductData] = useState({
         productId: product._id,
         productName: product.productName,
@@ -194,6 +201,14 @@ const ProductTeamMemberUpdate = () => {
         cropped: false,
     });
     const email = localStorage.getItem("userEmail")
+
+    const [Image, setproductImage] = useState(null)
+
+    const handleFileChange = (e) => {
+        const selectedFiles = e.target.files;
+        setproductImage(...selectedFiles);
+    };
+
 
     const [src, setSrc] = useState(null);
     const [crop, setCrop] = useState({ aspect: 16 / 9 });
@@ -229,70 +244,73 @@ const ProductTeamMemberUpdate = () => {
             crop.height * scaleY,
         );
 
-        // Converting to base64
-        const base64Image = canvas.toDataURL('image/jpeg');
-        setOutput(base64Image);
-        setProductData({ ...productData, croppedImage: base64Image, cropped: true })
+        // Convert canvas data to a Blob
+        canvas.toBlob((blob) => {
+            console.log(blob); // Log the blob data to verify
+
+            // Create a File object from the Blob
+            const croppedImageFile = new File([blob], 'cropped_image.jpg', { type: 'image/jpeg' });
+            console.log(croppedImageFile); // Log the cropped image file
+
+            // Display the cropped image
+            setOutput(URL.createObjectURL(blob));
+
+            // Set the cropped image file in the state
+
+            setproductImage(croppedImageFile)
+            setProductData({
+                ...productData,
+                cropped: true
+            });
+
+        }, 'image/jpeg');
     };
 
-    const convertImageToBase64 = async (file) => {
-        if (!file) {
-            return null; // Return null if no file is selected
-        }
-    
-        if (!(file instanceof Blob)) {
-            return null;
-        }
-    
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                // Prepend the base64 data with the appropriate data URL prefix
-                const base64Data = reader.result.split(',')[1];
-                const dataURL = `data:image/jpeg;base64,${base64Data}`;
-                resolve(dataURL);
-            };
-            reader.onerror = (error) => reject(error);
-            reader.readAsDataURL(file); // Read the file as a data URL
-        });
-    };
-    
-    
 
-    const handleMemberUpdateSubmit = async () => {
+
+    const handleMemberUpdateSubmit = async (event) => {
+        event.preventDefault();
+        setMessage("Submitting")
         try {
-            let imageData = productData.cropped ? productData.croppedImage : await convertImageToBase64(productData.croppedImage);
-            if (!imageData) {
-                imageData = product.image;
+            const formData = new FormData();
+            formData.append('productId', productData.productId);
+            formData.append('productName', productData.productName);
+            formData.append('productDescription', productData.productDescription);
+            formData.append('price', productData.price);
+
+            // Conditionally append the file based on whether Image is present
+            if (Image) {
+                formData.append('file', Image);
+            } else {
+                formData.append('file', product.image);
             }
-            console.log(productData);
-            console.log(imageData);
-            const response = await axiosInstance.post('/memberupdateproduct', {
-                productData: { ...productData, croppedImage: imageData },
-                email,
+
+            formData.append("email", email);
+
+            const response = await axios.post('http://localhost:5000/memberupdateproduct', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
 
             if (response) {
-                setMessage("Updated Successfully");
+                setMessage(response.data.message);
             }
 
-            // Here, you can submit the updated product data, including the cropped image, to your backend
             console.log('Submitting product data:');
         } catch (error) {
             console.error('Error updating product:', error);
         }
     };
 
+
     useEffect((req, res) => {
         if (message) {
-          setTimeout(() => {
-            setMessage(null)
-          }, 3000);
+            setTimeout(() => {
+                setMessage(null)
+            }, 3000);
         }
-      })
+    })
 
     return (
         <div>
@@ -325,7 +343,9 @@ const ProductTeamMemberUpdate = () => {
                         <input
                             type="file"
                             accept="image/*"
+
                             onChange={(e) => {
+                                handleFileChange(e)
                                 selectImage(e.target.files[0]);
                                 setProductData({ ...productData, croppedImage: e.target.files[0], cropped: false });
                             }}

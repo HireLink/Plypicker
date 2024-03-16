@@ -25,7 +25,7 @@ const Canvas = () => {
 
     useEffect(() => {
         fetchUserData();
-    }, []); // Empty dependency array to execute only once on component mount
+    }); // Empty dependency array to execute only once on component mount
 
 
     return (

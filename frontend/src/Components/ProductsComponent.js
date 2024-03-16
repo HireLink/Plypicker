@@ -55,7 +55,7 @@ const Products = () => {
         try {
             await axiosInstance.delete('/deleteproduct', {
                 params: {
-                    productid:deleteid
+                    productid: deleteid
                 }
             });
             fetchProductDetails()
@@ -129,9 +129,8 @@ const Products = () => {
                     {(searchedData.length > 0 ? searchedData : productDetails).map((product, index) => (
                         <div>
                             <div className="product-card" key={index}>
-                                {product.image.startsWith('/assets') ? (
+                                {typeof product.image === 'string' && product.image.startsWith('/assets') ? (
                                     <img className="product-image" src={`${process.env.REACT_APP_BACKEND_URL}${product.image}`} alt={product.productName} />
-
                                 ) : (
                                     <img className="product-image" src={product.image} alt={product.productName} />
                                 )}
