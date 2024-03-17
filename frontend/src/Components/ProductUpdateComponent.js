@@ -97,7 +97,7 @@ const ProductAdminUpdate = () => {
         formData.append('file', Image);
 
         try {
-            const response = await axios.post('http://localhost:5000/updateproduct', formData, {
+            const response = await axiosInstance.post('/updateproduct', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -287,7 +287,7 @@ const ProductTeamMemberUpdate = () => {
 
             formData.append("email", email);
 
-            const response = await axios.post('http://localhost:5000/memberupdateproduct', formData, {
+            const response = await axiosInstance.post('/memberupdateproduct', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
